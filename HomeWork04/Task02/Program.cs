@@ -20,14 +20,6 @@ while (true)
 }
 
 
-
-
-Console.ReadLine();
-
-
-
-
-
 char[] Func1()
 {
     Console.WriteLine("Enter the number of array elements");
