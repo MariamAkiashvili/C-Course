@@ -33,7 +33,3 @@ int SumOfDigits(int[] arr, int index)
     }
     return sum;
 }
-
-
-
-Console.ReadLine();
