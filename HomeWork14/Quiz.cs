@@ -39,11 +39,18 @@ namespace HomeWork14
             
             string jsonData = File.ReadAllText(fileName);
             var quizData = JsonConvert.DeserializeObject<QuizData>(jsonData);
+            try
+            {
+                Quiz quiz = new Quiz(quizData._name);
+                quiz.SetQuestions(quizData._questions);
+
+                return quiz;
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw ex;
+            }
             
-            Quiz quiz = new Quiz(quizData._name);
-            quiz.SetQuestions(quizData._questions);
-           
-            return quiz;
 
         }
     }

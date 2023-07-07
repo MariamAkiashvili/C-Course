@@ -151,11 +151,13 @@ string CorrectAnswerInList(List<string> probableAnswers)
     string correctAnswer="";
     while(true)
     {
+        Console.WriteLine("Choose correct answer: ");
         foreach (string input in probableAnswers)
         {
             Console.Write(input+", ");
         }
-        Console.WriteLine("Choose correct answer ");
+        Console.WriteLine();
+        
 
         correctAnswer = Console.ReadLine();
         if(probableAnswers.Where(a => a == correctAnswer).Count() == 1)
@@ -180,13 +182,24 @@ void SaveQuizToFile(Quiz quiz)
 
 void StartQuiz()
 {
-    Console.WriteLine("Let's start quiz");
-    Quiz quiz = Quiz.ReadQuiz(@"C:\Users\MarAkiashvili\source\repos\C-Course\HomeWork14\bin\Debug\net6.0\quiz.txt");
-    Console.WriteLine(quiz._name);
+    Greeting();
 
-    double mark = AskQuestions(quiz._questions);
+    try
+    {
 
-    Console.WriteLine("You Have Scored " + mark + " points.");
+        Console.WriteLine("Let's start quiz");
+        Quiz quiz = Quiz.ReadQuiz(@"C:\Users\MarAkiashvili\source\repos\C-Course\HomeWork14\bin\Debug\net6.0\quiz.txt");
+        Console.WriteLine(quiz._name);
+
+        double mark = AskQuestions(quiz._questions);
+
+        Console.WriteLine("You Have Scored " + mark + " points.");
+    }
+    catch
+    {
+        Console.WriteLine("Quiz file cannot be found or file is empty");
+    }
+    
 }
 
 double AskQuestions(List<Question> questions)
@@ -195,15 +208,57 @@ double AskQuestions(List<Question> questions)
     for(int i = 0 ; i < questions.Count; i++)
     {
         Console.WriteLine("Question "+(i + 1) +" - "+ questions[i]._question + "(" + questions[i]._point+" points)");
-        foreach(string answer in questions[i]._answers)
-        {
-            Console.WriteLine(answer);
-        }
         var userAns = CorrectAnswerInList(questions[i]._answers);
         if(userAns.ToLower() == questions[i]._correctAnswer.ToLower()) 
         {
             mark+= questions[i]._point;
         }
     }
+    SaveResultsInFile(null, mark);
+
     return mark;
+}
+
+void Greeting()
+{
+    string fullname = "";
+    while (fullname =="")
+    {
+        Console.WriteLine("Enter your fullname: ");
+        fullname = Console.ReadLine();
+    }
+
+    SaveResultsInFile(fullname);
+}
+
+
+void SaveResultsInFile(string fullName = default, double score = -1)
+{
+    string filePath = @"C:\Users\MarAkiashvili\source\repos\C-Course\HomeWork14\bin\Debug\net6.0\QuizResult.txt";
+    using (Stream stream = new FileStream(filePath, FileMode.Append))
+    {
+        using (StreamWriter writer = new StreamWriter(stream))
+        {
+            if(fullName != null)
+            {
+                SaveFullName(writer, fullName);
+                writer.Write(" - ");
+            }
+            if(score >= 0)
+            {
+                SaveScore(writer, score);
+                writer.WriteLine("Points");
+            }
+            writer.Close();
+        }
+    }
+}
+void SaveFullName(StreamWriter writer, string fullName)
+{
+    writer.Write(fullName);
+}
+
+void SaveScore(StreamWriter writer, double score)
+{
+    writer.Write(score);
 }
