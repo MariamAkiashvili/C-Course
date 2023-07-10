@@ -14,7 +14,7 @@ namespace HomeWork15
 
         private Building _office;
 
-        public List<Employee> _employees;
+        private List<Employee> _employees;
 
         public Company()
         {
@@ -29,11 +29,25 @@ namespace HomeWork15
 
         public void AddEmployee(Employee employee)
         {
-            _employees.Add(employee);
+            try
+            {
+                _employees.Add(employee);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
         public void AddEmployees(List<Employee> newEmployees)
         {
-            _employees.AddRange(newEmployees);
+            try
+            {
+                _employees.AddRange(newEmployees);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString() );
+            }
         }
 
         public void RemoveEmployee(Employee employee)

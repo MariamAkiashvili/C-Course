@@ -19,6 +19,7 @@ namespace HomeWork15
         {
             get
             {
+                Console.WriteLine("Fullname");//ToCheck method execution
                 return _fullname;
             }
             set
@@ -30,6 +31,7 @@ namespace HomeWork15
                 else
                 {
                     _fullname = value;
+                    Console.WriteLine(value); //ToCheck method execution
                 }
             }
         }
@@ -38,6 +40,7 @@ namespace HomeWork15
         {
             get
             {
+                Console.WriteLine(_age);
                 return _age;
             }
             set
@@ -59,6 +62,7 @@ namespace HomeWork15
         {
             get
             {
+                Console.WriteLine(_salary);
                 return _salary;
             }
             set
@@ -77,6 +81,7 @@ namespace HomeWork15
         {
             get
             {
+                Console.WriteLine(_workingExperience);
                 return _workingExperience;
             }
             set 
@@ -107,6 +112,8 @@ namespace HomeWork15
             {
                 _salary *= 4;
             }
+
+            Console.WriteLine(_salary);
         }
     }
 }
